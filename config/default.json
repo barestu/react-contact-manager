@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://admin:konde123@contactmanager-t9x9q.mongodb.net/test?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://admin:konde123@contactmanager-t9x9q.mongodb.net/test?retryWrites=true&w=majority",
+  "JWT_SECRET": "secret"
 }
