@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react';
 import axios from 'axios';
+import setAuthToken from '../../utils/setAuthToken';
 import AuthContext from './authContext';
 import authReducers from './authReducers';
 import {
@@ -19,22 +20,37 @@ const AuthState = props => {
     user: null,
     isAuthenticated: null,
     isLoading: true,
-    isError: null,
+    error: null,
   };
 
   const [state, dispatch] = useReducer(authReducers, initialState);
 
-  const loadUser = () => console.log(loadUser);
+  const loadUser = async () => {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+
+    try {
+      const res = await axios.get('/api/auth');
+
+      dispatch({ type: USER_LOADED, payload: res.data });
+    } catch (err) {
+      dispatch({ type: AUTH_ERROR });
+    }
+  }
 
   const register = async (formData) => {
     const config = {
-      'Content-Type': 'application/json',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     };
 
     try {
       const res = await axios.post('/api/users', formData, config);
 
       dispatch({ type: REGISTER_SUCCESS, payload: res.data });
+      loadUser();
     } catch (err) {
       dispatch({ type: REGISTER_FAIL, payload: err.response.data.msg });
     }
@@ -44,7 +60,7 @@ const AuthState = props => {
 
   const logout = () => console.log('logout');
 
-  const clearErrors = () => console.log('clearErrors');
+  const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
   return (
     <AuthContext.Provider

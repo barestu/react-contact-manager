@@ -1,10 +1,27 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import AlertContext from '../context/alert/alertContext';
 import AuthContext from '../context/auth/authContext';
 
-const Register = () => {
+const Register = (props) => {
   const { setAlert } = useContext(AlertContext);
-  const { register } = useContext(AuthContext);
+  const {
+    register,
+    error,
+    clearErrors,
+    isAuthenticated,
+  } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push('/');
+    }
+
+    if (error === 'User already exists') {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated, props.history]);
 
   const [user, setUser] = useState({
     name: '',
@@ -62,7 +79,7 @@ const Register = () => {
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
-            type="text"
+            type="password"
             name="password"
             value={password}
             onChange={onChange}
@@ -73,7 +90,7 @@ const Register = () => {
         <div className="form-group">
           <label htmlFor="password2">Confirm Password</label>
           <input
-            type="text"
+            type="password"
             name="password2"
             value={password2}
             onChange={onChange}
