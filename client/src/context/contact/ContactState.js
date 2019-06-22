@@ -10,7 +10,7 @@ import {
   UPDATE_CONTACT,
   FILTER_CONTACTS,
   CLEAR_FILTER,
-} from '../types';
+} from './contactTypes';
 
 const ContactState = props => {
   const initialState = {

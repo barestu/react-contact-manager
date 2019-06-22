@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AlertContext from '../context/alert/alertContext';
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -6,7 +7,7 @@ const Login = () => {
     password: '',
   });
 
-  const { name, email, password, password2 } = user;
+  const { email, password } = user;
 
   const onChange = (e) => {
     setUser({
