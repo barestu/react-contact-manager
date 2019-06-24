@@ -9,7 +9,7 @@ const Spinner = () => {
         style={{
           width: 200,
           margin: 'auto',
-          display: 'bloc',
+          display: 'block',
         }}
         alt="Loading" />
     </Fragment>
