@@ -11,13 +11,6 @@ connectDB();
 // Initialize middlewares
 app.use(express.json({ extended: false }));
 
-app.get('/', (req, res) => {
-  res.json({
-    title: 'Contact Manager',
-    version: '0.0.1',
-  });
-});
-
 // Define API routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/contacts', require('./routes/contacts'));
